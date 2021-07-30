@@ -1,0 +1,15 @@
+int temparr[30000],max=-100000;
+        if(nums.size()==1)
+        return nums[0];
+        for (int i = 0; i < nums.size(); ++i)
+        {
+            temparr[i] = nums[i];
+            for (int j = i; j < nums.size(); ++j)
+            {
+
+                temparr[j+1] = temparr[j] + nums[j];
+                if (max <= temparr[j])
+                    max = temparr[j];
+            }
+        }
+        return max;
