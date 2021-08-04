@@ -5,29 +5,24 @@
 #include<string>
 #include<queue>
 #define maxn 200005
+typedef long long ll;
 using namespace std;
-int dp[maxn];
-int ans(int n)
+ll dp[maxn] = {0,1,3,4};
+ll ans(int n)
 {
-	if (n >= 3)
-	{
-		if (!dp[n / 3])
-		{
-			dp[n / 3] = ans(n / 3);
-			if (dp[n / 3]!=1)
-				dp[n / 3] += 1;
-		if (!dp[n - 2 * n / 3])
-			dp[n - 2 * n / 3] = ans(n - 2 * n / 3) + 1;
-		return 2 * dp[n / 3] + dp[n - 2 * n / 3] + 1;
-	}
-	if (n == 2)
-	{
-		if (!dp[n / 2])
-			dp[n / 2] = ans(n / 2);
-		return 2 * dp[n / 2];
-	}
-	if (n == 1)
-		return 1;
+	if (n <= 3)
+		return dp[n];
+	if (!dp[n / 3])
+		dp[n / 3] = ans(n / 3);
+	if (!dp[n - 2 * n / 3])
+		dp[n - 2 * n / 3] = ans(n - 2 * n / 3);
+	if (!(n % 3))
+		dp[n] = 3 * dp[n / 3]+1;
+	if (n % 3 == 1)
+		dp[n] = 2 * dp[n / 3] + dp[n - 2 * n / 3] + 1;
+	if (n % 3 == 2)
+		dp[n] = 2 * dp[n / 3 + 1] + dp[n / 3] + 1;
+	return dp[n];
 }
 int main()
 {
@@ -38,7 +33,7 @@ int main()
 		scanf("%d", &n);
 		for (int i = 0; i < n; ++i)
 			scanf("%d", &a[i]);
-		printf("%d\n", ans(n));
+		printf("%lld\n", ans(n));
 	}
 	return 0;
 }
