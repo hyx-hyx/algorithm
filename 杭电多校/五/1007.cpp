@@ -1,73 +1,51 @@
-#define _CRT_SECURE_NO_WARNINGS
-#include<cstdio>
-#include<iostream>
-#include<vector>
-#include<string>
-#include<queue>
-#define mod 1000000007
-typedef long long ll;
+#include<bits/stdc++.h>
 using namespace std;
-ll fastpower(ll base, ll power)
-{
-	ll res = 1;
-	while (power)
-	{
-		if (power & 1)
-			res = (res%mod * base%mod) % mod;
-		base = (base%mod * base%mod) % mod;
-		power = power >> 1;
-	}
-	return res%mod;
-}
-int main()
-{
-	ll n;
-	int t;
+#define fi first
+#define se second
+#define mp make_pair
+#define pb push_back
+#define rep(i, a, b) for(int i=(a); i<(b); i++)
+#define per(i, a, b) for(int i=(b)-1; i>=(a); i--)
+#define sz(a) (int)a.size()
+#define de(a) cout << #a << " = " << a << endl
+#define dd(a) cout << #a << " = " << a << " "
+#define all(a) a.begin(), a.end()
+#define pw(x) (1ll<<(x))
+#define endl "\n"
+typedef long long ll;
+typedef pair<int, int> pii;
+typedef vector<int> vi;
+typedef double db;
 
-	scanf("%d", &t);
-	while (t--)
-	{
-		scanf("%lld", &n);
-		ll nmod = n % mod;
-		ll maxcost = 0;
-		ll base = (((1 + n) % mod * nmod)%mod) / 2;
-		ll mul = (((nmod * (nmod + 1))%mod) * (2 * nmod + 1)) % mod / 6;
-		ll bottom = (((base % mod) * (mul % mod)) % mod);
-		int sumdia = 0;
-		sumdia = (mul % mod - fastpower((n * (n + 1) / 2), 2)) % mod;
-		sumdia = ((nmod * mul) % mod + sumdia) % mod;
-		sumdia = ((sumdia % mod * (((nmod - 1) * (nmod + 2)) % mod))%mod) / 2;
-		maxcost = (bottom % mod * fastpower(n, 2)%mod) % mod;
-		printf("%lld\n", (sumdia%mod + bottom%mod) % mod);
-		printf("%lld\n", maxcost % mod);
-	}
-	return 0;
-}
-/*
-#define _CRT_SECURE_NO_WARNINGS
-#include<cstdio>
-#include<iostream>
-#include<vector>
-#include<string>
-#include<queue>
-#define mod 1000000007
-typedef long long ll;
-using namespace std;
-int main()
-{
-	ll n;
-	int t;
-	scanf("%d", &t);
-	while (t--)
-	{
-		scanf("%lld", &n);
-		ll nmod = n % mod;
-		ll maxcost = (((((((((n * n%mod) * (n + 1)%mod) * (n + 1)%mod) * ((2 * n%mod) + 1)%mod))%mod * n%mod) * n%mod)) / 12)%mod;
-		ll sumdia = (((((((n * (n - 1)%mod) * (n + 2)%mod) * (n + 2)%mod) * (n + 1)%mod) * (n + 1)%mod) + ((((((2 * n)%mod) * n%mod) * (n + 1)%mod) * (n + 1)%mod) * (2 * n + 1)%mod))/24)%mod;
-		printf("%llu\n", sumdia%mod);
-		printf("%llu\n", maxcost%mod);
-	}
-	return 0;
+const int P=1e9+7;
+ll n,ret1,ret2,ret3,q;
+int T;
+
+void file_put() {
+    freopen("filename.in", "r", stdin);
+    freopen("filename.out", "w", stdout);
 }
 
-*/
+ll Pow(ll x,ll k) {
+    ll ret=1;
+    for (; k; k>>=1,x=x*x%P) if (k&1) ret=ret*x%P;
+    return ret;
+}
+
+int main() {
+    //file_put();
+    
+    
+    scanf("%d",&T);
+    
+    while (T--) {
+        scanf("%lld",&n),n%=P,q=Pow(24,P-2);
+        ret1=n*n%P*(n+1)%P*(n+1)%P*(1+2*n)%P*Pow(12,P-2)%P*n%P*n%P;
+        ret2=(-2 + n + n*n%P)%P*(((-6 + 2*n%P)%P + 3*n*n%P)%P + n*n%P*n%P)%P*Pow(6,P-2)%P;
+        ret3=n*(n+1)%P*(2*n+1)%P*Pow(12,P-2)%P*n%P*(n+1)%P;
+        printf("%lld\n",((ret3+ret2)%P+P)%P);
+        printf("%lld\n",ret1);
+    }
+    return 0;
+}
+ 
