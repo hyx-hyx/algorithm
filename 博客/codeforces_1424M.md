@@ -37,7 +37,7 @@ IMPOSSIBLE
 #include<string>
 #include<queue>
 #include<algorithm>
-#define maxn 1000005
+#define maxn 1000005  //maxn决定了存放字符串的数组的大小，而我们一共需要存放n*k个字符串，n*k<=1e6
 using namespace std;
 vector<int> edges[28];
 vector<char> ans;
