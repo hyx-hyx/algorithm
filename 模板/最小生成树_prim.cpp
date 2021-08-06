@@ -1,82 +1,47 @@
-#define _CRT_SECURE_NO_WARNINGS 
-#include<cstdio>
-#include <iostream>
-#include <vector>
-#include <queue>
-#include <algorithm>
-using namespace std;
-#define INFINITE 0x3FFFFFFF   
-#define VertexData unsigned int  //顶点数据
-#define vexCounts 5005  //顶点数量
-int n;
-struct node
+struct edge {
+	int to;		//边的终点
+	int next;	//下一条边储存的位置
+	int weight;	//边的权重
+} e[MAXM<<1];
+//head[i]=x 表示i为起点的一个条边储存的位置
+int head[MAXN],dis[MAXN],tot,vis[MAXN];
+//存图
+inline void addEdge(int u,int v,int w)
 {
-    VertexData data;
-    unsigned int lowestcost;
-}closedge[vexCounts]; //Prim算法中的辅助信息
-int Minmum(struct node* closedge)  //返回最小代价边
-{
-    unsigned int min = INFINITE;
-    int index = 0;
-    for (int i = 0; i < vexCounts; i++)
-    {
-        if (closedge[i].lowestcost < min && closedge[i].lowestcost != 0)
-        {
-            min = closedge[i].lowestcost;
-            index = i;
-        }
-    }
-    return index;
+	++tot;
+	e[tot].to=v;
+	e[tot].weight=w;
+	e[tot].next=head[u];
+	head[u]=tot;
 }
-int MiniSpanTree_Prim(vector<vector<int> > &adjMat, VertexData s)
+struct node {
+	int dis;
+	int pos;//当前访问结点
+	int from;//这条边从哪来
+	bool operator < (const node& x)const {
+		return x.dis<dis;
+	}
+};
+//升序队列，小根堆
+priority_queue<node>q;
+void Prim()
 {
-    int sum = 0;
-    for (int i = 1; i <=n; i++)
-    {
-        closedge[i].lowestcost = INFINITE;
-    }
-    closedge[s].data = s;      //从顶点s开始
-    closedge[s].lowestcost = 0;
-    for (int i = 1; i <=n; i++)  //初始化辅助数组
-    {
-        if (i != s)
-        {
-            closedge[i].data = s;
-            closedge[i].lowestcost = adjMat[s][i];
-        }
-    }
-    for (int e = 1; e <n; e++)  //n-1条边时退出
-    {
-        int k = Minmum(closedge);  //选择最小代价边
-        sum += closedge[k].lowestcost;
-        closedge[k].lowestcost = 0; //代价置为0
-        for (int i = 2; i <=n; i++)  //更新v中顶点最小代价边信息
-        {
-            if (adjMat[k][i] < closedge[i].lowestcost)
-            {
-                closedge[i].data = k;
-                closedge[i].lowestcost = adjMat[k][i];
-            }
-        }
-    }
-    return sum;
-}
-int main()
-{
-    vector<vector<int> >adjMat(vexCounts, vector<int>(vexCounts, INFINITE));
-    int m;
-    cin >> n >> m;
-    for (int i = 0; i < m; ++i)
-    {
-        int x, y, z;
-        scanf("%d%d%d", &x, &y, &z);
-        adjMat[x][y] = z;
-        adjMat[y][x] = z;
-    }
-    int ans = MiniSpanTree_Prim(adjMat, 1); //Prim算法，从顶点1开始.
-    if (abs(ans) >= INFINITE)
-        cout << "orz" << endl;
-    else
-        cout << ans << endl;
-    return 0;
+	for(int i=2; i<=n; i++)dis[i]=INF;//初始化
+	q.push({0,1,1});//(1,1)的距离为0
+	while(!q.empty() && cnt<n) {
+		node now = q.top();
+		int x = now.pos, d = now.dis;//x为当前访问结点
+		q.pop();
+		if(vis[x])continue;
+		vis[x]=1;
+		cnt++;
+		printf("%d->%d 权重:%d\n",now.from,x,d);
+		ans+=d;
+		for(int i=head[x]; i!=0; i=e[i].next) {
+			if(e[i].weight < dis[e[i].to]) {
+				dis[e[i].to]=e[i].weight;
+				q.push({ dis[e[i].to], e[i].to, x});
+			}
+		}
+	}
 }
