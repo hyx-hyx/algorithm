@@ -1,6 +1,6 @@
 // deg是入度，在存图的时候需要录入数据
 // A是排序后的数组
-int edges[maxn][maxn]
+vector<int> edges[maxn];
 int deg[maxn], A[maxn];
 bool toposort(int n)
 {
