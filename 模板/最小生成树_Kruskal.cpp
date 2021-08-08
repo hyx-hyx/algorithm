@@ -36,7 +36,7 @@ int main()
 {
 	int n, m,k=0,total=0;
 	scanf("%d%d", &n, &m);
-	for (int i = 0; i < m; ++i)2
+	for (int i = 0; i < m; ++i)
 		scanf("%d%d%d", &edge[i].from, &edge[i].to, &edge[i].w);
 	init(n);
 	sort(edge.begin(), edge.begin()+m, cmp);
@@ -49,6 +49,7 @@ int main()
 			total += edge[i].w;
 			k++;
 		}
+
 	}
 	int count = 0;
 	for (int i = 1; i <= n; ++i)
