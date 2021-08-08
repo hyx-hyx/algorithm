@@ -18,7 +18,7 @@ struct edge
 vector<edge> edges(edgecount);
 vector<int> head(pointcount, 0);
 int cnt = 0;
-inline void add(int from, int to, int w)
+inline void add(int from, int to, int w)    //图论存图
 {
 	edges[++cnt].to = to;
 	edges[cnt].w = w;
@@ -26,7 +26,7 @@ inline void add(int from, int to, int w)
 	head[from] = cnt;
 }
 int dep[maxn], fa[maxn][25];
-void dfs(int x, int pre)
+void dfs(int x, int pre)     //dfs求每个点的深度和祖先
 {
 	dep[x] = dep[pre] + 1;
 	fa[x][0] = pre;
@@ -34,7 +34,7 @@ void dfs(int x, int pre)
 		if (edges[e].to != pre)
 			dfs(edges[e].to, x);
 }
-int getlca(int x, int y)
+int getlca(int x, int y)    //求两点的lca(默认x的深度大于y)
 {
 	if (dep[x] < dep[y])
 		swap(x, y);
@@ -61,10 +61,10 @@ int main()
 		add(x, y, 0);
 		add(y, x, 0);
 	}
-	dfs(s, 0);
+	dfs(s, 0);   //s为根节点
 	for (int j = 1; j <= 20; ++j)
 		for (int i = 1; i <= n; ++i)
-			fa[i][j] = fa[fa[i][j - 1]][j - 1];
+			fa[i][j] = fa[fa[i][j - 1]][j - 1];   //初始化fa数组
 	for (int i = 0; i < m; ++i)
 	{
 		int a, b;
