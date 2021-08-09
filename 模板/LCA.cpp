@@ -36,16 +36,17 @@ void dfs(int x, int pre)     //dfs求每个点的深度和祖先
 }
 int getlca(int x, int y)    //求两点的lca(默认x的深度大于y)
 {
-	if (dep[x] < dep[y])
+	if (dep[x] < dep[y])  //dep[]存储两点的深度
 		swap(x, y);
+	//fa[i][j]表示i的往上2^j-1个祖先
 	while (dep[x] > dep[y])
-		x = fa[x][(int)log2((double)( dep[x] - dep[y] ))];
-	if (x == y)
+		x = fa[x][(int)log2((double)( dep[x] - dep[y] ))];   //当x的深度大于y时,将x赋值为深度的差值，即让x与y同深度
+	if (x == y)       //若x==y说明y是x的祖先
 		return y;
 	for (int j = 20; j >= 0; --j)
 		if (fa[x][j] != fa[y][j])
 			x = fa[x][j], y = fa[y][j];
-	return fa[x][0];
+	return fa[x][0];  //返回父节点
 }
 int main()
 {
