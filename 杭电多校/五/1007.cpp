@@ -33,9 +33,6 @@ ll Pow(ll x,ll k) {
 }
 
 int main() {
-    //file_put();
-    
-    
     scanf("%d",&T);
     
     while (T--) {
