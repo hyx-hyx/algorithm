@@ -69,7 +69,7 @@ tcTU > T lstTrue(T lo, T hi, U f) { lo--; assert(lo <= hi); while (lo < hi) { T 
 tcT > void remDup(vector<T>& v) { sort(all(v)); v.erase(unique(all(v)), end(v)); }
 tcTU > void erase(T& t, const U& u) { auto it = t.find(u); assert(it != end(t)); t.erase(it); }
 
-void solve() {
+void solve(){
 	int n;
 	vi x, y, z;
 	cin >> n;
