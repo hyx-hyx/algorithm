@@ -1,7 +1,7 @@
 int M, N;            //M, N分别表示左、右侧集合的元素数量
-int Map[MAXM][MAXN]; //邻接矩阵存图
-int p[MAXN];         //记录当前右侧元素所对应的左侧元素
-bool vis[MAXN];      //记录右侧元素是否已被访问过
+int Map[maxn][maxn]; //邻接矩阵存图
+int p[maxn];         //记录当前右侧元素所对应的左侧元素
+bool vis[maxn];      //记录右侧元素是否已被访问过
 bool match(int i)
 {
     for (int j = 1; j <= N; ++j)
