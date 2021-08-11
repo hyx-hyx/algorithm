@@ -108,3 +108,62 @@ int main() {
 	// END OF CODE
 	return 0;
 }
+//=============================
+/*
+#define _CRT_SECURE_NO_WARNINGS
+#include<cstdio>
+#include<iostream>
+#include<vector>
+#include<cstring>
+#include<assert.h>
+#include<string>
+#include<queue>
+#include<algorithm>
+#include<set>
+using namespace std;
+typedef pair<int, int> P;
+#define maxn 500005
+typedef long long ll;
+int main()
+{
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	cout.tie(0);
+	int t;
+	cin >> t;
+	while (t--)
+	{
+		int n;
+		cin >> n;
+		set<pair<int,int> >sets[3];
+		vector<int>pos[3];
+		for (int i = 0; i < n; ++i)
+		{
+			int x, y, z;
+			cin >> pos[0][i] >> pos[1][i] >> pos[2][i];
+			sets[0].insert(make_pair(x, i));
+			sets[1].insert(make_pair(y, i));
+			sets[2].insert(make_pair(z, i));
+		}
+		vector<pair<int,int> >k;
+		int ans = 0;
+		while (sets[0].size())
+		{
+			pair<int,int> x = sets[0].begin(), y = sets[1].begin(), z = sets[2].begin();
+			pair<int,int> cur = x;
+			for (int i = 0; i < 3; ++i)
+			{
+				P cur=sets[i].begin();
+				k.push_back(make_pair(max(pos[0][cur.second]-cur.first, max(pos[1][cur.second]-y.first,pos[2][cur.second]-z.first)), cur.second));
+			}
+			sort(k.begin(), k.end());
+			ans = max(ans, k[0].first);
+			for (int i = 0; i < 3; ++i)
+				sets[i].erase(P(pos[i][k[0].second], k[0].second));
+		}
+		cout << ( ans + 1 ) / 2 << endl;
+	}
+	return 0;
+}
+
+*/

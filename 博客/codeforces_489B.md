@@ -1,13 +1,17 @@
-/*
-题意：
-有m个男孩和n个女孩，每个人都有一个舞蹈熟练度，用一个不超过100的正整数来表示。
+## 题意
+[题目链接](https://codeforces.com/problemset/problem/489/B)
+
+有$m$个男孩和$n$个女孩，每个人都有一个舞蹈熟练度，用一个不超过100的正整数来表示。
+
 一个男孩和一个女孩能够结为舞伴当且仅当两人的熟练度相差不超过1.
+
 问最多能结成多少对舞伴
+
 解法：
-符合条件的男孩和女孩连边。
-之后套匈牙利模板
-*/
-//二分图匹配
+符合条件的男孩和女孩连边。之后套匈牙利模板
+
+二分图匹配
+```cpp
 #define _CRT_SECURE_NO_WARNINGS
 #include<cstdio>
 #include<iostream>
@@ -94,3 +98,4 @@ int main()
 	cout << Hungarian() << endl;
 	return 0;
 }
+```
