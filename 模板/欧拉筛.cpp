@@ -2,7 +2,7 @@
 int prime[maxn];
 int visit[maxn];
 void Prime(){
-    memset(visit,0,sizeof(prime));
+    memset(visit,0,sizeof(visit));
     memset(prime, 0,sizeof(prime));
     for (int i = 2;i <= maxn; i++) {
         if (!visit[i]) {
