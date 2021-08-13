@@ -1,3 +1,13 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <cstdio>
+#include<iostream>
+#include<vector>
+#include<queue>
+#include<cstring>
+#include<algorithm>
+const int N=10000;  //节点数
+typedef long long ll;
+using namespace std;
 struct Trie{//trie树
     int fail;//失配指针
     int vis[30];//子结点的位置编号
@@ -7,21 +17,26 @@ struct Trie{//trie树
 
 int tot=0;//AC自动机里是从根节点0开始，trie树一般是从根节点1开始
 
-inline void build(string s){//构造tried树//基本的trie树的操作
+inline void build(string s)
+{//构造tried树//基本的trie树的操作
     int len = s.length();
     int p = 0;//trie树的当前指针（当前结点）从根节点0开始
-    for(int i = 0;i < len;++i){
+    for(int i = 0;i < len;++i)
+    {
         if(AC[p].vis[s[i]-'a'] == 0)//tire树的老规矩（不存在这个结点）
             AC[p].vis[s[i]-'a'] = ++tot;//不存在就构造一个新结点
-         p = AC[p].vis[s[i]-'a'];//往下走
+        p = AC[p].vis[s[i]-'a'];//往下走
     }
     AC[p].End++;//标记每一个单词的结尾//因为最后要求的是有多少个单词。要计算重复的
 }
 
-void Get_fail(){//构造失配指针利用bfs 遍历
+void Get_fail()
+{//构造失配指针利用bfs 遍历
     queue<int>Q;// 队列存
-    for(int i= 0;i < 26;++i){//处理第二层的失配指针（26个字母遍历一遍）
-        if(AC[0].vis[i] != 0){//若存在这个点
+    for(int i= 0;i < 26;++i)
+    {//处理第二层的失配指针（26个字母遍历一遍）
+        if(AC[0].vis[i] != 0)
+        {//若存在这个点
             AC[AC[0].vis[i]].fail = 0;//第二层都要指向根节点
             Q.push(AC[0].vis[i]);//并将该结点编号压入队列
         }
@@ -32,8 +47,7 @@ void Get_fail(){//构造失配指针利用bfs 遍历
         for(int i = 0;i < 26;++i){//枚举所有可能的子结点（26个字母）
             if(AC[u].vis[i]!=0){//若存在这个字母的子结点
                 AC[AC[u].vis[i]].fail = AC[AC[u].fail].vis[i];//注意是vis[i],一定是指向与该结点字母相同的结点，若不存在就会是指向0（根节点）
-                //让当前结点的子结点的失配指针fail指向，当前结点的失配指针fail所指向的
-                //结点的，与当前结点的子结点字母相同的子结点
+                //让当前结点的子结点的失配指针fail指向 当前结点的失配指针fail所指向的结点的 与当前结点的子结点字母相同的子结点
                 Q.push(AC[u].vis[i]);
                 //并把该结点压入队列里等待继续往下遍历
             }
@@ -64,12 +78,15 @@ int AC_Query(string s){//AC自动机匹配
 
 int n;
 string s;
-
 int main()
 {
-    scanf("%d",&n);
-    memset(AC, 0, sizeof AC);//memset可以初始化结构体哇
-    over(i,1,n){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    cin>>n;
+    memset(AC, 0, sizeof(AC));//memset可以初始化结构体哇
+    for(int i=1;i<=n;++i)
+    {
         cin>>s;
         build(s);//建trie树（图）
     }
