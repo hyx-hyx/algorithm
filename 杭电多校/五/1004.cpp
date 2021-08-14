@@ -1,8 +1,6 @@
-## 1004
-[题目链接](https://vjudge.net/problem/HDU-7015)
-
+/*
+题目链接:https://vjudge.net/problem/HDU-7015
 定义$F[i,j]$表示字符串$S$中分别以i,j为左端点的两个子串满足k-匹配的最大长度。
-
 换句话说,$F[i,j]$等于使得$S[i,i+L-1]$与$S[j,j+L-1]$满足k-匹配的最大$L$。
 考虑如何计算所有的$F[i,j](1\le{i}<j\le{n})$
 * 我们枚举两个子串的左端点之差$d(d\in[1,n-1])$
@@ -17,7 +15,7 @@
 * 注意到过程中$G[i,j]\leq{t-i}$ ，因而 在单调减少。而每次新增产生贡献的$G[i,j]$的数量为
 且值也不超过$t-i$。因此整个过程的时间复杂度是$O(n^2)$
 综上所述，整个算法的时间复杂度为$O(n^2)$
-```cpp
+*/
 #include<bits/stdc++.h>
 #define dd(x) cerr<<#x<<" = "<<x<<" "
 #define de(x) cerr<<#x<<" = "<<x<<endl
@@ -97,5 +95,3 @@ int main()
     }
     return 0;
 }
- 
-```
