@@ -89,3 +89,43 @@ ll query_mark(int l, int r, int p, int cl = 1, int cr = n, ll mk = 0) // 区间�
         return query_mark(l, r, ls(p), cl, mid, mk + mark(p)) + query_mark(l, r, rs(p), mid + 1, cr, mk + mark(p)); // 带着标记传递
     }
 }
+//===========================================================================
+void build(int l = 1, int r = n, int p = 1) // 建树
+{
+    val(p) = 0;
+    if (l != r)
+    {
+        ls(p) = ++cnt, rs(p) = ++cnt;
+        int mid = (l + r) / 2;
+        build(l, mid, ls(p));
+        build(mid + 1, r, rs(p));
+    }
+}
+int C[MAXN], L[MAXN], ori[MAXN];
+void discretize(int A[], int n)
+{
+    memcpy(C, A, sizeof(int) * n);     // 复制
+    sort(C, C + n);                    // 排序
+    int l = unique(C, C + n) - C;      // 去重
+    for (int i = 0; i < n; ++i)
+    {
+        L[i] = lower_bound(C, C + l, A[i]) - C + 1; // 查找
+        ori[L[i]] = A[i]; // 保存离散化后的数对应的原数
+    }
+}
+//在main函数中把离散化后的数据一个一个地插入可持久化的权值线段树
+for (int i = 0; i < n; ++i)
+{
+    roots[i + 1] = ++cnt;
+    update(L[i], 1, roots[i], roots[i + 1]);
+}
+int kth(int k, int p, int q, int cl = 1, int cr = n) // 求指定排名的数
+{
+    if (cl == cr)
+        return ori[cl];
+    int mid = (cl + cr) / 2;
+    if (val(ls(q)) - val(ls(p)) >= k)
+        return kth(k, ls(p), ls(q), cl, mid); // 往左搜
+    else
+        return kth(k - (val(ls(q)) - val(ls(p))), rs(p), rs(q), mid + 1, cr); // 往右搜
+}
