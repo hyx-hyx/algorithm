@@ -9,4 +9,4 @@ ll ext_gcd(ll a,ll b,ll &x,ll &y)
         y-=a/b*x;
     }
     return d;
-}
+} 
