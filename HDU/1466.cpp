@@ -56,3 +56,46 @@ int main()
 	}
 	return 0;
 }
+/*
+头文件 #include<bitset>
+定义 bitset<位数> bset;
+bset[j]得到第j位的值
+
+//使用bitset优化
+#define _CRT_SECURE_NO_WARNINGS
+#include<cstdio>
+#include<iostream>
+#include<vector>
+#include<cstring>
+#include<assert.h>
+#include<string>
+#include<queue>
+#include<algorithm>
+#include<bitset>
+using namespace std;
+typedef long long ll;
+const int maxn = 191;
+int main()
+{
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	cout.tie(0);
+	int n;
+	bitset<maxn> dp[21];
+	while(cin >> n)
+	{
+		for(int i = 1; i <= 20; ++i)
+			dp[i][0] = 1;
+		for(int i = 2; i <= n; ++i)
+			for(int j = 1; j < i; ++j)
+				dp[i] |= (dp[j] << (j * (i - j)));
+		cout << 0 << " ";
+		for(int i = 1; i < n * (n - 1) / 2; ++i)
+			if(dp[n][i])
+				cout << i << " ";
+		cout << n * (n - 1) / 2 << endl;
+	}
+	return 0;
+}
+*/
+
