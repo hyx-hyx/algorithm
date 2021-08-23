@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+a#define _CRT_SECURE_NO_WARNINGS
 #include <cstdio>
 #include<iostream>
 #include<vector>
