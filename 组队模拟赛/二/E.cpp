@@ -6,7 +6,7 @@
 #include<queue>
 #include<algorithm>
 #include<cmath>
-#define maxn 5005
+#define maxn 510
 using namespace std;
 typedef long long ll;
 typedef pair<int,int> P;
@@ -17,7 +17,7 @@ typedef struct node
 	int to;
 	ll w;
 }node;
-vector<node> edge(200005);
+vector<node> edge(250010);
 bool cmp(node i,node j)
 {
 	return i.w < j.w;
@@ -46,16 +46,20 @@ int main()
 		scanf("%d%d",&x,&y);
 		points.push_back(P(x,y));
 	}
-	for(int i = 0; i <points.size(); ++i)
-		for(int j=0;j<points.size();++j)
+	int cnt=0;
+	for(int i = 0; i < points.size(); ++i)
+		for(int j = 0; j < points.size(); ++j)
 			if(i != j)
-				edge[i].from = i,edge[i].to,edge[i].w = ((ll)(points[i].first - points[j].first) * (points[i].first - points[j].first) + (ll)(points[i].second - points[j].second) * (points[i].second - points[j].second));
+			{
+				int weight = ((ll)(points[i].first - points[j].first) * (ll)(points[i].first - points[j].first)) + ((ll)(points[i].second - points[j].second) * (ll)(points[i].second - points[j].second));
+				edge[cnt].from = i,edge[cnt].to = j,edge[cnt].w = weight;
+				cnt++;
+			}
 	init(p);
-	int m = p * (p - 1) / 2;
 	int k = 0;
 	vector<ll> a;
-	sort(edge.begin(),edge.begin() + m,cmp);
-	for(int i = 0; i <= m; ++i)
+	sort(edge.begin(),edge.begin() + cnt,cmp);
+	for(int i = 0; i <= cnt; ++i)
 	{
 		if(k == p - 1) break;
 		if(find(edge[i].from) != find(edge[i].to))

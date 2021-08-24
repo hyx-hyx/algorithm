@@ -16,37 +16,37 @@ int main()
 	cin.tie(0);
 	cout.tie(0);
 	int t;
-	cin>>t;
+	cin >> t;
 	while(t--)
 	{
 		int n,m;
 		ll k;
-		cin>>n>>m>>k;
-		vector<P> row(n);
-		vector<P> col(m,P(-1,0x3f3f3f3f));
+		cin >> n >> m >> k;
+		vector<int> row(n);
+		vector<int> col(m,0x3f3f3f3f);
 		vector<vector<int> >a(n,vector<int>(m,0));
-		for(int i = 0; i<n; ++i)
+		for(int i = 0; i < n; ++i)
+			for(int j = 0; j < m; ++j)
+				cin >> a[i][j],row[i]= max(row[i],a[i][j]),col[j] = min(col[j],a[i][j]);
+		if(k == 1)
 		{
-			for(int j = 0; j<m; ++j)
-			{
-				cin>>a[i][j];
-				if(row[i].second<a[i][j])
-					row[i].first = j,row[i].second = a[i][j];
-				if(col[j].second>a[i][j])
-					col[j].second = a[i][j],col[j].first = i;
-			}
+			cout << row[0] << endl;
+			continue;
 		}
-		int flag = 0;
-		P pos(0,0);
-		while(k--)
+		if(k % 2)
 		{
-			if(!flag)
-				pos.second = row[pos.first].first;
-			else
-				pos.first = col[pos.second].first;
-			flag = flag&1^1;
+			int minv = 0x3f3f3f3f;
+			for(int i = 0; i < n; ++i)
+				minv = min(minv,row[i]);
+			cout << max(a[0][0],minv)<<endl;
 		}
-		cout<<a[pos.first][pos.second]<<endl;
+		else
+		{
+			int maxv = 0;
+			for(int i = 0; i < m; ++i)
+				maxv = max(maxv,col[i]);
+			cout << max(a[0][0],maxv) << endl;
+		}
 	}
 	return 0;
 }
