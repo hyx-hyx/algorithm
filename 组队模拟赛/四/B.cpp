@@ -7,25 +7,28 @@
 #include<string>
 #include<queue>
 #include<algorithm>
-#define maxn 2020
 using namespace std;
-int c[maxn],w[maxn],f[50050];
+int f[1005];
 int main()
 {
-    int n,m,v;
-    scanf("%d",&n);
-    while(n--)
-    {
-        scanf("%d%d",&m,&v);
-        for(int i = 1; i <= m; ++i)
-            scanf("%d%d",&c[i],&w[i]);
-        memset(f,0,sizeof(f));
-        for(int i = 1; i <= v; ++i)
-            f[i] = -0x3f3f3f3f;
-        for(int i = 1; i <= m; ++i)
-            for(int j = c[i]; j <= v; ++j)
-                f[j] = max(f[j],f[j - c[i]] + w[i]);
-            printf("%d\n",f[v]);
-    }
-    return 0;
+	int n,m,v;
+	scanf("%d%d",&m,&v);
+	vector<int> a(m+1,0);
+	for(int i = 1; i <= m; ++i)
+		scanf("%d",&a[i]);
+	cin >> n;
+	while(n--)
+	{
+		int l,r;
+		cin >> l >> r;
+		vector<int> c(a.begin() + l-1,a.begin() + r+1);
+		memset(f,0,sizeof(f));
+		for(int i = 1; i <= v; ++i)
+			f[i] = 0x3f3f3f3f;
+		for(int i = 1; i <= r-l+1; ++i)
+			for(int j = c[i]; j <= v; ++j)
+				f[j] = min(f[j],f[j - c[i]] +1);
+		cout << ((f[v] == 0x3f3f3f3f) ? -1:f[v]) << endl;
+	}
+	return 0;
 }
