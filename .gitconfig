@@ -3,3 +3,8 @@
 [user]
 	email = 315024424@qq.com
 	name = hyx-hyx
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

@@ -23,6 +23,8 @@ void merge(int i, int j)
 {
     int x = find(i);
     int y = find(j);
+    if(x==y)
+        return ;
     if (ranki[x] > ranki[y])
         fa[x] = y;
     else

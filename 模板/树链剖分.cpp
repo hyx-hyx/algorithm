@@ -97,7 +97,7 @@ int son[maxn]:当前点的子节点
 int siz[maxn]:当前点的大小(以当前点为根节点的子树的节点数量)
 */
 int v[maxn],fa[maxn], dep[maxn], siz[maxn], son[maxn];
-void dfs1(int u, int f)   
+void dfs1(int u, int f=1)   
 {
     fa[u] = f;
     dep[u] = dep[f] + 1;
@@ -125,7 +125,7 @@ int tim:时间戳计数器
 int v[maxn]:存放所有节点的权值
 */
 int tim, dfn[maxn], top[maxn], w[maxn];
-void dfs2(int u, int t)
+void dfs2(int u, int t=1)
 {
     dfn[u] = ++tim;
     top[u] = t;
@@ -133,7 +133,7 @@ void dfs2(int u, int t)
     if (!son[u])
         return;
     dfs2(son[u], t);
-    for(int i=head[u];i;i=edges[i].to)
+    for(int i=head[u];i;i=edges[i].next)
     {
         int v = edges[i].to;
         if (v == fa[u] || v == son[u])
