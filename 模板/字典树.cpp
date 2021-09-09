@@ -38,6 +38,7 @@ bool find_prefix(const string &s)
             return false;
         cur=nexti[cur][c-'a'];
     }
+    return true;
 }
 //====================================================================
 int main()
