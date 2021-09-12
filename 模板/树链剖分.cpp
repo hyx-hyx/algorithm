@@ -1,4 +1,4 @@
-a#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 #include <cstdio>
 #include<iostream>
 #include<vector>
@@ -125,7 +125,7 @@ int tim:时间戳计数器
 int v[maxn]:存放所有节点的权值
 */
 int tim, dfn[maxn], top[maxn], w[maxn];
-void dfs2(int u, int t=1)
+void dfs2(int u, int t)
 {
     dfn[u] = ++tim;
     top[u] = t;
