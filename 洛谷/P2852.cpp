@@ -1,9 +1,20 @@
+//给定一串数字，取其中长度大于等于K的子串，求可以取的所有子串的最大长度。
+/*这题是一道后缀数组的模板题。
+出现k次，相当于我们选择了k个后缀，之后求出他们的最长公共前缀。
+我们知道，后缀(j)和后缀(k)的 最 长 公 共 前 缀 为height[rank[j]+1],
+height[rank[j]+2],height[rank[j]+3],…,height[rank[k]]中的最小值(设rank[j]<rank[k])。
+那么设k个后缀中rank的min=l，max=r，k个的最长公共前缀就是min(height[l+1->r])
+所以k个后缀在rank上一定是连续的。
+枚举i，维护height[i->i+k-1]的min，用单调队列即可O(N)解决。(还要加上求出rank,height的时间)
+*/
+//后缀数组加单调队列
 #include <algorithm>
 #include <cstdio>
 #include <cstring>
 #include <iostream>
+#include <queue>
 using namespace std;
-const int N = 1000010;
+const int N = 20005;
 char s[N]; //原字符串
 int n,sa[N],rk[N],oldrk[N << 1],id[N],px[N],cnt[N];
 int ht[N];
@@ -47,4 +58,30 @@ void getht()
 		while(s[i + k] == s[sa[rk[i] - 1] + k]) ++k;
 		ht[rk[i]] = k;  // height太长了缩写为ht
 	}
+}
+int main()
+{
+	int N,K;
+	cin >> N >> K;
+	for(int i = 1; i <=N; ++i)
+	{
+		int c;
+		cin >> c;
+		s[i] = c + '0';
+	}
+	getsa();
+	getht();
+	deque<int> Q;
+	int ans = 0;
+	for(int i = 2; i <= n; ++i)
+	{	
+		if(!Q.empty() && i - Q.front() >= K-1)
+			Q.pop_front();
+		while(!Q.empty() && ht[Q.back()] > ht[i])
+			Q.pop_back();
+		Q.push_back(i);
+		ans = max(ans,ht[Q.front()]);
+	}
+	cout << ans << endl;
+	return 0;
 }

@@ -48,3 +48,26 @@ void getht()
 		ht[rk[i]] = k;  // height太长了缩写为ht
 	}
 }
+int main()
+{
+	int n;
+	cin >> n;
+	for(int i = 1; i <=n; ++i)
+		cin >> s[i];
+	s[n + 1] = '#';
+	for(int i = 1; i <=n; ++i)
+		s[2*n+2-i] = s[i];
+	getsa();
+	int l = 1,r = n;
+	n = 2 * n + 1;
+	int i = 0;
+	while(l != r)
+	{
+		cout<<(rk[l] < rk[n + 1 - r] ? s[l++] : s[r--]);
+		i++;
+		if(i == 80)
+			cout << "\n",i = 0;
+	}
+	cout << s[l];
+	return 0;
+}
