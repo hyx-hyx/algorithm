@@ -1,0 +1,28 @@
+{
+	// Place your vscode 工作区 snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	"header": {
+		"prefix": "c++",
+		"body": ["#include<cstdio>",
+"#include<iostream>",
+"#include<algorithm>",
+"#include<queue>",
+"#include<stack>",
+"#include<cstring>",
+"#include<cmath>",
+"#define For(i,a,b) for(int (i)=(a);(i)<(b);++(i))",
+"#define Fore(i,a,b) for(int (i)=(a);(i)<=(b);++(i))",
+"typedef long long ll;",
+"using namespace std;",
+"int main()",
+"{",
+	"    return 0;",
+"}",
+		],
+		"description": "c++ header"
+	}
+}

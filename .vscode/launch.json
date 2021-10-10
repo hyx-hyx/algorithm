@@ -7,9 +7,9 @@
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
-      "cwd": "d:\\vscode\\多校",
+      "cwd": "d:\\vscode\\",
       "environment": [],
-      "program": "d:\\vscode\\多校\\build\\Debug\\outDebug",
+      "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",//调试程序的路径名称
       "internalConsoleOptions": "openOnSessionStart",
       "MIMode": "gdb",
       "miDebuggerPath": "C:\\Program Files (x86)\\Dev-Cpp\\MinGW64\\bin\\gdb.exe",
