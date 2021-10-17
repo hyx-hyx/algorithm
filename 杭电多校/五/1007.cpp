@@ -45,4 +45,58 @@ int main() {
     }
     return 0;
 }
- 
+/*
+#define _CRT_SECURE_NO_WARNINGS
+#include<cstdio>
+#include<iostream>
+#include<algorithm>
+#include<queue>
+#include<stack>
+#include<cstring>
+#include<cmath>
+#define For(i,a,b) for(int (i)=(a);(i)<(b);++(i))
+#define Fore(i,a,b) for(int (i)=(a);(i)<=(b);++(i))
+typedef long long ll;
+const int mod = 1e9 + 7;
+using namespace std;
+//求取 (a/b)%p 等同于 求取 a∗(b的逆元)%p。
+ll pow(ll a,ll n,ll p)    //快速幂 a^n % p
+{
+	ll ans = 1;
+	while(n)
+	{
+		if(n & 1) ans = ans * a % p;
+		a = a * a % p;
+		n >>= 1;
+	}
+	return ans;
+}
+
+ll niyuan(ll a,ll p)   //费马小定理求逆元
+{
+	return pow(a,p - 2,p);
+}
+int main()
+{
+	int T;
+	cin >> T;
+	while(T--)
+	{
+		ll n;
+		cin >> n;
+		n %= mod;
+		ll ret1 = (n + 1) * (n + 1) % mod * n % mod * n % mod * niyuan(4,mod) % mod;
+		ll ret2 = (n + 2) * (n - 1) % mod * niyuan(2,mod) % mod;
+		ll ret3 = n * (n + 1) % mod * (n + 1) % mod * ((2 * n%mod + 1)%mod) % mod * niyuan(6,mod) % mod;
+		ll ret4 = n * n % mod * (n + 1) % mod * (n + 1) % mod * niyuan(4,mod) % mod;
+		ll result = (ret1 + ret2 * ((ret3 - ret4)+mod) % mod) % mod;
+		cout << result << endl;
+		ll ret5 = (n + 1) * n % mod * niyuan(2,mod) % mod;
+		ll ret6 = n * (n + 1) % mod * (2 * n % mod + 1) % mod * niyuan(6,mod) % mod;
+		ll ans = n * n % mod * ret5 % mod * ret6 % mod;
+		cout << ans << endl;
+	}
+	return 0;
+}
+
+*/
