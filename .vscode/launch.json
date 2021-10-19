@@ -7,7 +7,7 @@
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
-      "cwd": "d:\\vscode\\",
+      "cwd": "${fileDirname}",
       "environment": [],
       "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",//调试程序的路径名称
       "internalConsoleOptions": "openOnSessionStart",
