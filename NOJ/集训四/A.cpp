@@ -6,39 +6,22 @@
 #include<stack>
 #include<cstring>
 #include<cmath>
-#include<list>
 #define For(i,a,b) for(int (i)=(a);(i)<(b);++(i))
 #define Fore(i,a,b) for(int (i)=(a);(i)<=(b);++(i))
 typedef long long ll;
 using namespace std;
-list<int> l,r;
-int lsize,rsize;
+stack<char> s;
 int main()
 {
-	int n;
-	scanf("%d",&n);
+	string str;
+	cin >> str;
 	int cnt = 0;
-	int vis[10000005] = {0};
-	Fore(i,1,n)
-	{
-		char c;
-		getchar();
-		scanf("%c",&c);
-		if(c == 'L')
-			l.emplace_front(++cnt);
-		if(c == 'R')
-			r.emplace_back(++cnt);
-		if(c == 'G')
-		{
-			int x;
-			cin >> x;
-			vis[x] = 0;
-
-		}
-		if(c == 'Q')
-		{
-
-		}
-	}
+	For(i,0,str.size())
+		if(str[i] == '(')
+			s.push(str[i]);
+		else
+			if(!s.empty())
+				cnt++,s.pop();
+	cout << cnt*2 << endl;
 	return 0;
 }

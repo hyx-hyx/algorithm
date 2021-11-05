@@ -6,7 +6,6 @@
 #include<stack>
 #include<cstring>
 #include<cmath>
-#include<windows.h>
 #define For(i,a,b) for(int (i)=(a);(i)<(b);++(i))
 #define Fore(i,a,b) for(int (i)=(a);(i)<=(b);++(i))
 typedef long long ll;
@@ -27,7 +26,7 @@ int main()
 			maxi.pop_back();
 		maxi.push_back(i);
 		if(i >= k - 1)
-			maxarr.emplace_back(maxi.front());//push_back比emplace_back慢，会超时
+			maxarr.emplace_back(maxi.front());//这里不能用push_back(),push_back效率比emplace_back慢。或者多加一次循环，直接输出。
 
 		if(!mini.empty() && i-mini.front()>=k)
 			mini.pop_front();
