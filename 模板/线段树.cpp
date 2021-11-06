@@ -1,96 +1,101 @@
 //模板题 洛谷P3372
 #define _CRT_SECURE_NO_WARNINGS
-#define For(i,a,b) for(int (i)=(a);(i)<(b);++(i))
 #include<cstdio>
 #include<iostream>
-#include<vector>
-#include<string>
+#include<algorithm>
 #include<queue>
-#define maxn 100005
+#include<stack>
+#include<cstring>
+#include<cmath>
+#define For(i,a,b) for(int (i)=(a);(i)<(b);++(i))
+#define Fore(i,a,b) for(int (i)=(a);(i)<=(b);++(i))
 typedef long long ll;
 using namespace std;
-int n = 0;
-//arr读入时下标从1到n
-ll tree[maxn * 4] = {0},arr[maxn]={0},mark[maxn * 4] = {0};
-void build(int start=1,int end=n,int node=1)
+const int M = 100005;
+int a[M] = {0};
+struct segment_tree
 {
-	if(start == end)
-		tree[node] = arr[start];
+	int l,r;
+	ll sum,maxn,mark = 0;
+}tr[M*4];
+void pushup(int n)
+{
+	tr[n].sum = tr[n << 1].sum + tr[n << 1 | 1].sum;
+	tr[n].maxn = max(tr[n << 1].maxn ,tr[n << 1 | 1].maxn);
+}
+void build(int n,int l,int r)
+{
+	tr[n].l = l,tr[n].r = r;
+	if(tr[n].l == tr[n].r)
+		tr[n].sum = a[l],tr[n].maxn = a[l];
 	else
 	{
-		int mid = (start + end) / 2;
-		build(start,mid,node * 2);
-		build(mid + 1,end,node * 2 + 1);
-		tree[node] = tree[node * 2] + tree[node * 2 + 1];
+		int mid = (l + r) >> 1;
+		build(n << 1,l,mid);
+		build(n << 1|1,mid+1,r);
+		pushup(n);
 	}
 }
-inline void pushdown(int node,int start,int end)
+void pushdown(int n)
 {
-	int mid = (start + end) / 2;
-	mark[node * 2] += mark[node];
-	mark[node * 2 + 1] += mark[node];
-	tree[node * 2] += mark[node] * (mid - start + 1);
-	tree[node * 2 + 1] += mark[node] * (end - mid);
-	mark[node] = 0;
+	int mid = (tr[n].l + tr[n].r) >> 1;
+	tr[n << 1].mark += tr[n].mark;
+	tr[n << 1 | 1].mark += tr[n].mark;
+	tr[n << 1].sum += tr[n].mark * (mid - tr[n].l + 1);
+	tr[n << 1|1].sum += tr[n].mark * (tr[n].r-mid);
+	tr[n].mark = 0;
 }
-void update(int L,int R,int val,int node = 1,int start = 1,int end = n)
+void update(int n,int l,int r,int v)
 {
-	if(start > R || end < L)
-		return;
+	if(tr[n].l >= l && tr[n].r <= r)
+		tr[n].sum += v * (tr[n].r - tr[n].l + 1),tr[n].mark += v;
 	else
 	{
-		if(L <= start && R >= end)
-		{
-			tree[node] += val * (end - start + 1);
-			if(end > start)
-				mark[node] += val;
-		}
-		else
-		{
-			int mid = (start + end) / 2;
-			pushdown(node,start,end);
-			update(L,R,val,node * 2,start,mid);
-			update(L,R,val,node * 2 + 1,mid + 1,end);
-			tree[node] = tree[node * 2] + tree[node * 2 + 1];
-		}
+		int mid = (tr[n].l+tr[n].r) >> 1;
+		pushdown(n);
+		if(l <= mid)
+			update(n<<1,l,r,v);
+		if(r > mid)
+			update(n << 1 | 1,l,r,v);
+		pushup(n);
 	}
 }
-ll query(int L,int R,int start = 1,int end = n,int node = 1)
+ll query(int n,int l,int r)
 {
-	if(end < L || R < start)
-		return 0;
+	if(tr[n].l >=l&&tr[n].r<=r)
+		return tr[n].sum;
 	else
 	{
-		if(start >= L && end <= R)
-			return tree[node];
-		else
-		{
-			int mid = (start + end) / 2;
-			pushdown(node,start,end);
-			return query(L,R,start,mid,node * 2) + query(L,R,mid + 1,end,node * 2 + 1);
-		}
+		ll ret = 0;
+		int mid = (tr[n].l + tr[n].r) >> 1;
+		pushdown(n);
+		if(l <= mid)
+			ret+=query(n << 1,l,r);
+		if(r > mid)
+			ret+=query(n << 1 | 1,l,r);
+		return ret;
 	}
 }
 int main()
 {
-	int m;
+	int m,n;
 	cin >> n >> m;
-	for(int i=1;i<=n;++i)
-		cin >> arr[i];
-	build();
-	for(int i=1;i<=m;++i)
+	for(int i = 1; i <= n; ++i)
+		cin >> a[i];
+	build(1,1,n);
+	for(int i = 1; i <= m; ++i)
 	{
 		int op,x,y,k;
 		cin >> op;
 		if(op == 1)
 		{
 			cin >> x >> y >> k;
-			update(x,y,k);
+			update(1,x,y,k);
 		}
 		else
 		{
 			cin >> x >> y;
-			cout << query(x,y) << endl;
+			cout << query(1,x,y) << endl;
 		}
 	}
 	return 0;
