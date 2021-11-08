@@ -1,4 +1,3 @@
-//模板题 洛谷P3372
 #define _CRT_SECURE_NO_WARNINGS
 #include<cstdio>
 #include<iostream>
@@ -11,12 +10,12 @@
 #define Fore(i,a,b) for(int (i)=(a);(i)<=(b);++(i))
 typedef long long ll;
 using namespace std;
-const int M = 100005;
+const int M = 200005;
 int a[M] = {0};
 struct segment_tree
 {
 	int l,r;
-	ll sum,maxn,mark = 0;
+	ll sum=0,maxn=0,mark = 0;
 }tr[M*4];
 void pushup(int n)
 {
@@ -27,7 +26,7 @@ void build(int n,int l,int r)
 {
 	tr[n].l = l,tr[n].r = r;
 	if(tr[n].l == tr[n].r)
-		tr[n].sum = a[l],tr[n].maxn = a[l];
+		tr[n].sum = tr[n].maxn = a[l];
 	else
 	{
 		int mid = (l + r) >> 1;
@@ -43,12 +42,29 @@ void pushdown(int n)
 	tr[n << 1 | 1].mark += tr[n].mark;
 	tr[n << 1].sum += tr[n].mark * (mid - tr[n].l + 1);
 	tr[n << 1|1].sum += tr[n].mark * (tr[n].r-mid);
+	tr[n << 1].maxn += tr[n].mark;
+	tr[n << 1 | 1].maxn += tr[n].mark;
 	tr[n].mark = 0;
+}
+//单点更新 p为下标，a[p]=x;
+void change(int n,int p,int x)
+{
+	if(tr[n].l == tr[n].r)
+		tr[n].sum = tr[n].maxn=x;
+	else
+	{
+		int mid = (tr[n].l + tr[n].r) >> 1;
+		if(p <= mid)
+			change(n << 1,p,x);
+		else
+			change(n << 1 | 1,p,x);
+		pushup(n);
+	}
 }
 void update(int n,int l,int r,int v)
 {
 	if(tr[n].l >= l && tr[n].r <= r)
-		tr[n].sum += v * (tr[n].r - tr[n].l + 1),tr[n].mark += v;
+		tr[n].sum += v * (tr[n].r - tr[n].l + 1),tr[n].mark += v,tr[n].maxn+=v;
 	else
 	{
 		int mid = (tr[n].l+tr[n].r) >> 1;
@@ -60,6 +76,7 @@ void update(int n,int l,int r,int v)
 		pushup(n);
 	}
 }
+
 ll query(int n,int l,int r)
 {
 	if(tr[n].l >=l&&tr[n].r<=r)
@@ -76,26 +93,48 @@ ll query(int n,int l,int r)
 		return ret;
 	}
 }
+ll query_max(int n,int l,int r)
+{
+	if(tr[n].l >= l && tr[n].r <= r)
+		return tr[n].maxn;
+	else
+	{
+		ll ans = 0;
+		int mid = (tr[n].l + tr[n].r) >> 1;
+		if(l <= mid)
+			ans=max(query_max(n << 1,l,r),ans);
+		if(r > mid)
+			ans=max(query_max(n << 1 | 1,l,r),ans);
+		return ans;
+	}
+}
 int main()
 {
 	int m,n;
-	cin >> n >> m;
-	for(int i = 1; i <= n; ++i)
-		cin >> a[i];
-	build(1,1,n);
-	for(int i = 1; i <= m; ++i)
+	while(scanf("%d%d",&n,&m)!=EOF)
 	{
-		int op,x,y,k;
-		cin >> op;
-		if(op == 1)
+		memset(tr,0,sizeof tr);
+		memset(a,0,sizeof a);
+		for(int i = 1; i <= n; ++i)
+			scanf("%d",&a[i]);
+		build(1,1,n);
+		for(int i = 1; i <= m; ++i)
 		{
-			cin >> x >> y >> k;
-			update(1,x,y,k);
-		}
-		else
-		{
-			cin >> x >> y;
-			cout << query(1,x,y) << endl;
+			char op;
+			getchar();
+			scanf("%c",&op);
+			if(op == 'U')
+			{
+				int A,B;
+				scanf("%d%d",&A,&B);
+				change(1,A,B);
+			}
+			else
+			{
+				int x,y;
+				scanf("%d%d",&x,&y);
+				printf("%lld\n",query_max(1,x,y));
+			}
 		}
 	}
 	return 0;
