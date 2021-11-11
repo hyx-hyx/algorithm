@@ -19,7 +19,7 @@ void getNext(string s, vector<int>& nextval)
 int KMP(string text, string p)
 {
     int i = 0, j = 0;
-    while (i <=text.size())
+    while (i <text.size())
     {
         if (j == -1 || text[i] == p[j])
         {
