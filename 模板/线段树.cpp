@@ -61,6 +61,18 @@ void change(int n,int p,int x)
 		pushup(n);
 	}
 }
+void change_range(int n,int l,int r,int v)
+{
+	if(tr[n].l >= l && tr[n].r <= r)
+		tr[n].sum = max(tr[n].sum,(ll)(tr[n].r - tr[n].l + 1) * v);
+	else
+	{
+		int mid = (tr[n].l + tr[n].r) >> 1;
+		if(l <= mid) change_range(n << 1,l,r,v);
+		if(r > mid) change_range(n << 1 | 1,l,r,v);
+		pushup(n);
+	}
+}
 void update(int n,int l,int r,int v)
 {
 	if(tr[n].l >= l && tr[n].r <= r)

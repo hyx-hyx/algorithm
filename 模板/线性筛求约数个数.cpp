@@ -1,3 +1,4 @@
+//d[i]表示约数的个数，num[i]是中间数组。
 int d[MAXN],prime[MAXN],num[MAXN],vis[MAXN],pn;
 void sieve(int n)
 {

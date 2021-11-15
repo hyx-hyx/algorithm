@@ -1,5 +1,6 @@
 #include<cstdio>
 #define MAXN 1005
+//prime存储质数，s[i]表示i的约数和，psum为预处理的中间数组。
 int s[MAXN],prime[MAXN],psum[MAXN],pn;
 bool vis[MAXN];
 void sieve(int n)
