@@ -1167,3 +1167,41 @@ struct circles
 			ans[i] -= ans[i + 1];
 	}
 };
+//旋转卡壳求凸包最大三角形面积
+//p为凸包的点集数组，n为凸包点数，^为叉积
+double rotating_calipers(Point p[],int n)
+{
+	double ans = 0;
+	Point v;
+	int cur = 1;
+	for(int i = 0; i < n; i++)
+	{
+		int j = (i + 1) % n;
+		int k = (j + 1) % n;
+		while(j != i && k != i)
+		{
+			ans = max(ans,fabs((p[j] - p[i])^(p[k] - p[i])));
+			while(((p[i] - p[j])^(p[(k + 1) % n] - p[k])) < 0)
+				k = (k + 1) % n;
+			j = (j + 1) % n;
+		}
+	}
+	return ans;
+}
+//旋转卡壳求凸包最远点对
+//ch为凸包的点集数组，n为凸包点数，^为叉积
+int Dis(Point a,Point b)
+{
+	return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
+}
+double RotateCalipers(Point* ch,int n)
+{//传入点集和集合元素个数 
+	int ans = 0; int q = 1;
+	ch[n] = ch[0];
+	for(int i = 0; i < n; ++i)
+	{
+		while(((ch[q] - ch[i + 1]) ^ (ch[i] - ch[i + 1])) < ((ch[q + 1] - ch[i + 1]) ^ (ch[i] - ch[i + 1]))) q = (q + 1) % n;
+		ans = max(ans,max(Dis(ch[q],ch[i]),Dis(ch[q + 1],ch[i + 1])));
+	}
+	return ans;
+}

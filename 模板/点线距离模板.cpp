@@ -1,5 +1,5 @@
 /**********************计算几何----点线距离模板***********/
-const double eps = 1e-8;
+const double eps = 1e-8; 
 const int maxn=1010;
 struct Point
 {
