@@ -8,3 +8,16 @@ while(fabs(r - l) > eps)
     else
         r = mid;
 }
+//整数逼近
+ll three_div(ll l,ll r)
+{
+	ll lmid,rmid;
+	while(l < r - 1)
+	{
+		lmid = (l + r) >> 1;
+		rmid = (lmid + r) >> 1;
+		if(f(lmid) > f(rmid))l = lmid;
+		else r = rmid;
+	}
+	return r;
+}
