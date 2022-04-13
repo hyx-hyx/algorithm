@@ -24,5 +24,4 @@ void sieve(int n)
 			num[i*prime[j]]=1;
 		}
 	}
-	
 }
